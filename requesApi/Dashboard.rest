@@ -1,0 +1,22 @@
+##### Login 
+
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+    "email":"cs.ritik@gmail.com",
+    "password":"Ritik"
+}
+
+
+###
+GET http://localhost:5000/api/dashboard
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhM2UxOGU4NGVkYWM0MGY3N2U4NzUwOCIsImlhdCI6MTc4Mjc0ODcwNCwiZXhwIjoxNzgzMzUzNTA0fQ.bMEVHcQjaui90tffKWqnN3pBGDGloCm9By0PluTOGzk
+
+###
+GET http://localhost:5000/api/analytics/category
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhM2UxOGU4NGVkYWM0MGY3N2U4NzUwOCIsImlhdCI6MTc4Mjc1MTQyNiwiZXhwIjoxNzgzMzU2MjI2fQ.mPP16Z-vu1QfnwCisn2qZeD3XnxvPQiYrccDhP9g2-Y
+
+###
+GET http://localhost:5000/api/analytics/monthly-expense
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhM2UxOGU4NGVkYWM0MGY3N2U4NzUwOCIsImlhdCI6MTc4Mjc1MTQyNiwiZXhwIjoxNzgzMzU2MjI2fQ.mPP16Z-vu1QfnwCisn2qZeD3XnxvPQiYrccDhP9g2-Y

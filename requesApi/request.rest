@@ -1,0 +1,56 @@
+POST http://localhost:5000/api/auth/register 
+Content-Type: application/json
+
+{
+    "name":"ritik",
+    "email":"cs.ritik@gmail.com",
+    "password":"Ritik"
+}
+
+##### Login 
+
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+    "email":"cs.ritik@gmail.com",
+    "password":"Ritik"
+}
+
+###
+
+### Add Transaction
+POST http://localhost:5000/api/transactions
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhM2UxOGU4NGVkYWM0MGY3N2U4NzUwOCIsImlhdCI6MTc4Mjc0NTgzOSwiZXhwIjoxNzgzMzUwNjM5fQ.UvuuPJCUHjxLUYZK0eD4mtI1ABJPq73_9P6oyX11_jI
+
+
+{
+    "type":"income",
+    "amount":50000,
+    "category":"Salary",
+    "paymentMethod":"Bank Transfer",
+    "description":"Monthly Salary"
+}
+### GET Transaction 
+
+GET http://localhost:5000/api/transactions
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhM2UxOGU4NGVkYWM0MGY3N2U4NzUwOCIsImlhdCI6MTc4Mjc0NzAxNiwiZXhwIjoxNzgzMzUxODE2fQ.Fg7IGSEGXlCugYgowhoI87H3JyPPHJ8xcSDChIQZqeE
+
+### Get Transaction y the id
+GET http://localhost:5000/api/transactions/6a4292b0cbd35ffaae335483
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhM2UxOGU4NGVkYWM0MGY3N2U4NzUwOCIsImlhdCI6MTc4Mjc0NzIwMywiZXhwIjoxNzgzMzUyMDAzfQ.kvG4ewZgNhmXThv3oP8jdu7itwVviiStity_AoBbHgA
+
+###
+PUT http://localhost:5000/api/transactions/6a4292b0cbd35ffaae335483
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhM2UxOGU4NGVkYWM0MGY3N2U4NzUwOCIsImlhdCI6MTc4Mjc0Nzc2NiwiZXhwIjoxNzgzMzUyNTY2fQ.1xIdC0IALDOr6kJSK64eR-bO6qKqAu2U4n7YZrwcOCo
+
+{
+    "amount":6000,
+    "paymentMethod":"Cash"
+}
+###
+
+DELETE http://localhost:5000/api/transactions/6a428b04a5d42b4215dc24ee
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhM2UxOGU4NGVkYWM0MGY3N2U4NzUwOCIsImlhdCI6MTc4Mjc0Nzc2NiwiZXhwIjoxNzgzMzUyNTY2fQ.1xIdC0IALDOr6kJSK64eR-bO6qKqAu2U4n7YZrwcOCo
