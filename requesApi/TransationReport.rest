@@ -34,3 +34,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhM2UxOGU4N
 ###
 GET http://localhost:5000/api/ai/insights
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhM2UxOGU4NGVkYWM0MGY3N2U4NzUwOCIsImlhdCI6MTc4MjgzODQyNiwiZXhwIjoxNzgzNDQzMjI2fQ.jBV6hhyDvrAr0rGS7n0Nl04Ncwa86mDW46BPE-DFcvg
+
+
+
+###
+GET http://localhost:5000/api/ai/insights
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhM2UxOGU4NGVkYWM0MGY3N2U4NzUwOCIsImlhdCI6MTc4MjgzODQyNiwiZXhwIjoxNzgzNDQzMjI2fQ.jBV6hhyDvrAr0rGS7n0Nl04Ncwa86mDW46BPE-DFcvg
+
