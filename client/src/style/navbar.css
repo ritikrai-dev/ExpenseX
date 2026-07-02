@@ -1,0 +1,64 @@
+
+
+
+.navbar{
+
+    height:75px;
+
+    background:white;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:0 35px;
+
+    border-bottom:1px solid #e5e7eb;
+}
+
+.navbar-right{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+}
+
+.icon-btn{
+
+    border:none;
+
+    background:#f3f4f6;
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:50%;
+
+    cursor:pointer;
+}
+
+.icon-btn i{
+
+    font-size:22px;
+}
+
+.profile{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+}
+
+.profile img{
+
+    width:40px;
+
+    border-radius:50%;
+}

@@ -2,48 +2,28 @@ import { useState } from "react";
 
 export default function PasswordInput({
   id,
-  placeholder,
-  value,
-  onChange,
-  autoComplete
+  ...props
 }) {
-
-  const [show,setShow] = useState(false);
-
+  const [show, setShow] = useState(false);
 
   return (
-
     <div className="auth-input-wrap">
-
       <i className="ti ti-lock field-icon"></i>
-
 
       <input
         id={id}
         type={show ? "text" : "password"}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        autoComplete={autoComplete}
+        {...props}
       />
-
 
       <button
         type="button"
         className="auth-eye-btn"
-        onClick={()=>setShow(!show)}
+        onClick={() => setShow((prev) => !prev)}
+        aria-label={show ? "Hide password" : "Show password"}
       >
-
-        <i 
-          className={`ti ${
-            show ? "ti-eye-off" : "ti-eye"
-          }`}
-        />
-
+        <i className={`ti ${show ? "ti-eye-off" : "ti-eye"}`}></i>
       </button>
-
-
     </div>
-
   );
 }
