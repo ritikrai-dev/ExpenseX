@@ -10,12 +10,15 @@ import dashboardRoutes from "./routes/dashboardRoutes.js";
 import analyticsRoutes from "./routes/analyticsRoutes.js";
 import reportRoutes from "./routes/reportRoutes.js";
 import aiRoutes from "./routes/aiRoutes.js";
-
+import User from "./models/User.js";
 dotenv.config();
 
 console.log("Gemini Key:", process.env.GEMINI_API_KEY);
 
 await connectDB();
+const users = await User.find();
+
+console.log(users);
 
 const app = express();
 

@@ -1,13 +1,59 @@
-import DashboardLayout from "../components/DashboardLayout";
+import { useEffect, useState } from "react";
+import DashboardHeader from "../components/DashboardHeader";
+import SummaryCards from "../components/SummaryCards";
+import RecentTransactions from "../components/RecentTransactions";
 
 export default function Dashboard() {
-  return (
-    <DashboardLayout>
 
-      <h1>Welcome to ExpenseX AI 👋</h1>
+    const [dashboardData, setDashboardData] = useState(null);
 
-      <p>Your dashboard is ready.</p>
+    useEffect(() => {
 
-    </DashboardLayout>
-  );
+        async function fetchDashboard() {
+
+            try {
+
+                const response = await fetch(
+                    "http://localhost:5000/api/dashboard",
+                    {
+                        headers: {
+                            Authorization:
+                                `Bearer ${localStorage.getItem("token")}`,
+                        },
+                    }
+                );
+
+                const data = await response.json();
+
+                setDashboardData(data.dashboard);
+
+            } catch (error) {
+
+                console.log(error);
+
+            }
+
+        }
+
+        fetchDashboard();
+
+    }, []);
+
+    if (!dashboardData) {
+
+        return <h2>Loading...</h2>;
+
+    }
+
+    return (
+        <>
+            <DashboardHeader />
+
+            <SummaryCards dashboard={dashboardData} />
+
+            <RecentTransactions
+        transactions={dashboardData.recentTransactions}
+    />
+        </>
+    );
 }

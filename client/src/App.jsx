@@ -6,6 +6,7 @@ import DashboardLayout from "./components/DashboardLayout.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Transactions from "./pages/Transaction.jsx";
 import Analytics from "./pages/Analytics.jsx";
+import Ai from "./pages/Ai.jsx";
 import Reports from "./pages/Report.jsx";
 import Settings from "./pages/Setting.jsx";
 
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/transactions" element={<Transactions />} />
         <Route path="/analytics" element={<Analytics />} />
+        <Route path="/ai" element={<Ai/>}/>
         <Route path="/reports" element={<Reports />} />
         <Route path="/settings" element={<Settings />} />
       </Route>
