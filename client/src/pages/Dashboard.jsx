@@ -38,7 +38,7 @@ export default function Dashboard() {
         fetchDashboard();
 
     }, []);
-
+    
     if (!dashboardData) {
 
         return <h2>Loading...</h2>;

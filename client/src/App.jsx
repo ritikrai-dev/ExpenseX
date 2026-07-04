@@ -4,7 +4,7 @@ import AuthPage from "./pages/AuthPage.jsx";
 import DashboardLayout from "./components/DashboardLayout.jsx";
 
 import Dashboard from "./pages/Dashboard.jsx";
-import Transactions from "./pages/Transaction.jsx";
+import Transactions from "./pages/Transactions.jsx";
 import Analytics from "./pages/Analytics.jsx";
 import Ai from "./pages/Ai.jsx";
 import Reports from "./pages/Report.jsx";
@@ -17,7 +17,7 @@ export default function App() {
 
       <Route element={<DashboardLayout />}>
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/transactions" element={<Transactions />} />
+        <Route path="/transactions" element={<Transactions/>} />
         <Route path="/analytics" element={<Analytics />} />
         <Route path="/ai" element={<Ai/>}/>
         <Route path="/reports" element={<Reports />} />
