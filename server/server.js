@@ -29,20 +29,26 @@ const allowedOrigins = [
   process.env.FRONTEND_URL,
 ];
 
+console.log("Allowed Origins:", allowedOrigins);
+
 app.use(
   cors({
-    origin: function (origin, callback) {
+    origin(origin, callback) {
+
+      console.log("Incoming Origin:", origin);
+
       if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
+        return callback(null, true);
       }
+
+      console.log("Blocked Origin:", origin);
+
+      return callback(null, false);
+
     },
-    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
-
 
 app.use("/api/auth", authRoutes);
 app.use("/api/transactions", transactionRoutes);
