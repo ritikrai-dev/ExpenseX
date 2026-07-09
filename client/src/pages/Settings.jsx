@@ -30,7 +30,7 @@ export default function Settings() {
 
         const response = await fetch(
 
-            `${import.meta.env.VITE_API_URL}/users/profile`,
+            `${import.meta.env.VITE_API_URL}/api/users/profile`,
 
             {
 
@@ -57,7 +57,7 @@ export default function Settings() {
 
         const response = await fetch(
 
-            `${import.meta.env.VITE_API_URL}/users/profile`,
+            `${import.meta.env.VITE_API_URL}/api/users/profile`,
 
             {
 
@@ -90,7 +90,7 @@ export default function Settings() {
 
     const response = await fetch(
 
-        `${import.meta.env.VITE_API_URL}/users/change-password`,
+        `${import.meta.env.VITE_API_URL}/api/users/change-password`,
 
         {
 

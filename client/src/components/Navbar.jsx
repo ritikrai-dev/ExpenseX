@@ -12,7 +12,7 @@ export default function Navbar() {
       try {
 
         const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/users/profile`,
+          `${import.meta.env.VITE_API_URL}/api/users/profile`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
