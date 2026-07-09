@@ -17,8 +17,6 @@ import User from "./models/User.js";
 import userRoutes from "./routes/userRoutes.js";
 dotenv.config();
 
-console.log("Gemini Key:", process.env.GEMINI_API_KEY);
-console.log(process.env.MONGODB);
 await connectDB();
 
 const app = express();
@@ -26,13 +24,25 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  process.env.FRONTEND_URL,
+];
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
+
 
 app.use("/api/auth", authRoutes);
 app.use("/api/transactions", transactionRoutes);
