@@ -1,6 +1,20 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "../style/sidebar.css";
 export default function Sidebar() {
+  const navigate = useNavigate();
+
+const handleLogout = () => {
+  const confirmLogout = window.confirm(
+    "Are you sure you want to logout?"
+  );
+
+  if (!confirmLogout) return;
+
+  localStorage.removeItem("token");
+  navigate("/", { replace: true });
+};
+
+
   return (
     <aside className="sidebar">
 
@@ -47,10 +61,13 @@ export default function Sidebar() {
 
       </nav>
 
-      <button className="logout-btn">
-        <i className="ti ti-logout"></i>
-        Logout
-      </button>
+      <button
+  className="logout-btn"
+  onClick={handleLogout}
+>
+  <i className="ti ti-logout"></i>
+  Logout
+</button>
 
     </aside>
   );
