@@ -57,7 +57,7 @@ export default function Analytics() {
 
         const response = await fetch(
 
-            "http://localhost:5000/api/analytics/monthly-expense",
+            `${import.meta.env.VITE_API_URL}/api/analytics/monthly-expense`,
 
             {
 
