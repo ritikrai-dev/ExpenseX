@@ -1,104 +1,252 @@
-
-
+/* ===========================
+   Navbar
+=========================== */
 
 .navbar{
 
     height:75px;
 
-    background:white;
+    background:#fff;
 
     display:flex;
-
+    align-items:center;
     justify-content:space-between;
 
-    align-items:center;
-
-    padding:0 35px;
+    padding:0 32px;
 
     border-bottom:1px solid #e5e7eb;
+
+    position:sticky;
+    top:0;
+    z-index:900;
+
+    box-shadow:0 2px 12px rgba(0,0,0,.04);
+
 }
+
+/* ===========================
+   Left Section
+=========================== */
+
+.navbar-left{
+
+    display:flex;
+    align-items:center;
+    gap:16px;
+
+}
+
+.navbar-left h2{
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    font-size:26px;
+    font-weight:700;
+
+    color:#111827;
+
+}
+
+.navbar-left h2 i{
+
+    color:#4F46E5;
+
+}
+
+/* ===========================
+   Right Section
+=========================== */
 
 .navbar-right{
 
     display:flex;
-
     align-items:center;
+    gap:18px;
 
-    gap:20px;
 }
+
+/* ===========================
+   Icon Button
+=========================== */
 
 .icon-btn{
 
+    width:44px;
+    height:44px;
+
     border:none;
+    border-radius:50%;
 
     background:#f3f4f6;
 
-    width:42px;
-
-    height:42px;
-
-    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
     cursor:pointer;
+
+    transition:all .25s ease;
+
+}
+
+.icon-btn:hover{
+
+    background:#e5e7eb;
+    transform:translateY(-2px);
+
 }
 
 .icon-btn i{
 
     font-size:22px;
+
 }
+
+/* ===========================
+   Profile
+=========================== */
 
 .profile{
 
     display:flex;
-
     align-items:center;
-
     gap:12px;
+
 }
 
 .profile img{
 
-    width:40px;
-
-    border-radius:50%;
-}
-
-.navbar-left{
-    display:flex;
-    align-items:center;
-    gap:16px;
-}
-
-.menu-toggle{
-    display:none;
     width:42px;
     height:42px;
-    border:none;
-    border-radius:10px;
-    background:#f3f4f6;
-    cursor:pointer;
-    align-items:center;
-    justify-content:center;
-}
 
-.menu-toggle i{
-    font-size:24px;
-}
+    border-radius:50%;
 
+    object-fit:cover;
 
-/* mobile */
-@media (max-width:768px){
-
-.menu-toggle{
-    display:flex;
 }
 
 .profile span{
-    display:none;
+
+    font-weight:600;
+    color:#374151;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+
+    max-width:150px;
+
 }
 
-.dashboard-main{
-    margin-left:0 !important;
+/* ===========================
+   Hamburger
+=========================== */
+
+.menu-toggle{
+
+    display:none;
+
+    width:44px;
+    height:44px;
+
+    border:none;
+    border-radius:12px;
+
+    background:#f3f4f6;
+
+    align-items:center;
+    justify-content:center;
+
+    cursor:pointer;
+
+    transition:all .25s ease;
+
+}
+
+.menu-toggle:hover{
+
+    background:#e5e7eb;
+
+}
+
+.menu-toggle i{
+
+    font-size:24px;
+
+}
+
+/* ===========================
+   Tablet
+=========================== */
+
+@media(max-width:768px){
+
+.navbar{
+
+    padding:0 18px;
+
+}
+
+.menu-toggle{
+
+    display:flex;
+
+}
+
+.profile span{
+
+    display:none;
+
+}
+
+.navbar-left h2{
+
+    font-size:22px;
+
+}
+
+}
+
+/* ===========================
+   Mobile
+=========================== */
+
+@media(max-width:576px){
+
+.navbar{
+
+    height:70px;
+
+    padding:0 14px;
+
+}
+
+.navbar-left{
+
+    gap:12px;
+
+}
+
+.navbar-left h2{
+
+    font-size:18px;
+
+}
+
+.icon-btn{
+
+    width:40px;
+    height:40px;
+
+}
+
+.profile img{
+
+    width:36px;
+    height:36px;
+
 }
 
 }
