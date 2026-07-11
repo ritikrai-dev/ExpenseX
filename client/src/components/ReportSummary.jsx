@@ -1,45 +1,37 @@
 import "../style/reportSummary.css";
 
-export default function ReportSummary() {
+export default function ReportSummary({ summary }) {
 
-    return (
+  const cards = [
+    {
+      title: "Total Income",
+      value: `₹${summary.totalIncome.toLocaleString()}`
+    },
+    {
+      title: "Total Expense",
+      value: `₹${summary.totalExpense.toLocaleString()}`
+    },
+    {
+      title: "Balance",
+      value: `₹${summary.balance.toLocaleString()}`
+    },
+    {
+      title: "Transactions",
+      value: summary.totalTransactions
+    }
+  ];
 
-        <div className="report-grid">
-
-            <div className="report-card">
-
-                <h3>Total Income</h3>
-
-                <h2>₹0</h2>
-
-            </div>
-
-            <div className="report-card">
-
-                <h3>Total Expense</h3>
-
-                <h2>₹0</h2>
-
-            </div>
-
-            <div className="report-card">
-
-                <h3>Balance</h3>
-
-                <h2>₹0</h2>
-
-            </div>
-
-            <div className="report-card">
-
-                <h3>Transactions</h3>
-
-                <h2>0</h2>
-
-            </div>
-
+  return (
+    <div className="report-grid">
+      {cards.map((card) => (
+        <div
+          key={card.title}
+          className="report-card"
+        >
+          <h3>{card.title}</h3>
+          <h2>{card.value}</h2>
         </div>
-
-    );
-
+      ))}
+    </div>
+  );
 }

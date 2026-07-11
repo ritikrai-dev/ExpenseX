@@ -1,7 +1,60 @@
-import ReportFilters from "../components/ReportFilters.jsx";
 import ReportSummary from "../components/ReportSummary.jsx";
+import { useEffect, useState } from "react";
 
 export default function Reports() {
+    const [summary, setSummary] = useState({
+    totalIncome:0,
+    totalExpense:0,
+    balance:0,
+    totalTransactions:0
+});
+async function fetchSummary(){
+
+    try{
+
+        const response = await fetch(
+
+            `${import.meta.env.VITE_API_URL}/api/dashboard`,
+
+            {
+
+                headers:{
+
+                    Authorization:`Bearer ${localStorage.getItem("token")}`
+
+                }
+
+            }
+
+        );
+
+        const data = await response.json();
+
+        setSummary({
+
+            totalIncome:data.dashboard.totalIncome,
+
+            totalExpense:data.dashboard.totalExpense,
+
+            balance:data.dashboard.balance,
+
+            totalTransactions:data.dashboard.totalTransactions
+
+        });
+
+    }
+
+    catch(error){
+
+        console.log(error);
+
+    }
+
+}
+
+useEffect(() => {
+    fetchSummary();
+}, []);
     const downloadReport = async (type) => {
 
     try {
@@ -63,10 +116,7 @@ export default function Reports() {
             <h1 className="page-title">
                 Reports
             </h1>
-
-            <ReportFilters />
-
-            <ReportSummary />
+            <ReportSummary summary={summary} />
 
             <div className="report-actions">
 
