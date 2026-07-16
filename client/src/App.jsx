@@ -8,13 +8,20 @@ import Ai from "./pages/AIInsights.jsx";
 import Reports from "./pages/Reports.jsx";
 import Settings from "./pages/Settings.jsx";
 import Landing from "./pages/Landing.jsx";
+import Auth from "./utils/Auth.jsx"
 
 export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Landing/>}/>
       <Route path="/auth" element={<AuthPage/>} />
-      <Route element={<DashboardLayout />}>
+     <Route
+        element={
+          <Auth>
+            <DashboardLayout />
+          </Auth>
+        }
+      > 
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/transactions" element={<Transactions/>} />
         <Route path="/analytics" element={<Analytics />} />

@@ -1,9 +1,16 @@
 import "./Hero.css";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { getDashboard} from "../data/demoService.js";
 
 export default function Hero() {
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
+function handleDemo() {
+    getDashboard();
+    navigate("/dashboard");
+}
   return (
     <section className="hero" id="home">
 
@@ -37,12 +44,12 @@ export default function Hero() {
             Get Started Free
           </Link>
 
-          <Link
-            to={token ? "/dashboard" : "/auth?mode=login"}
-            className="hero-btn secondary"
-          >
-            Live Demo
-          </Link>
+          <button
+    className="secondary-btn"
+    onClick={handleDemo}
+>
+    Try Demo
+</button>
 
         </div>
 

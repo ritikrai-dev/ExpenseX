@@ -7,10 +7,18 @@ export default function Navbar({ sidebarOpen,
 
   const [user, setUser] = useState(null);
   const location = useLocation();
-
+  
   useEffect(() => {
-
+    
     async function fetchUser() {
+      const isDemo = localStorage.getItem("demoMode") === "true";
+      if (isDemo) {
+    const demoUser = JSON.parse(localStorage.getItem("demoUser"));
+
+    setUser(demoUser);
+
+    return;
+}
 
       try {
 

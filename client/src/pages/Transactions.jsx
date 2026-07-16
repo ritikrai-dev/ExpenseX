@@ -6,6 +6,12 @@ import SearchBar from "../components/SearchBar.jsx";
 import TransactionFilter from "../components/TransactionFilter.jsx";
 import Pagination from "../components/Pagination";
 import { toast } from "react-toastify";
+import {
+    getTransactions,
+    addTransaction,
+    updateTransaction,
+    deleteTransaction
+} from "../components/data/dataService.js";
 
 
 
@@ -19,32 +25,37 @@ export default function Transactions() {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("all");
 
-  useEffect(() => {
-    async function fetchTransactions() {
-      try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/transactions?page=${page}&limit=10`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
+ useEffect(() => {
 
-        const data = await response.json();
+    async function loadTransactions() {
 
-        setTransactions(data.transactions);
-        setTotalPages(data.totalPages);
+        try {
 
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
+            setLoading(true);
+
+            const data = await getTransactions();
+
+            setTransactions(data);
+
+            setTotalPages(1);
+
+        } catch (error) {
+
+            console.log(error);
+
+            toast.error("Failed to load transactions.");
+
+        } finally {
+
+            setLoading(false);
+
+        }
+
     }
 
-    fetchTransactions();
-  }, [page]);
+    loadTransactions();
+
+}, []);
 
   // Delete Transaction
   const handleDelete = async (id) => {
