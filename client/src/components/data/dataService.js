@@ -1,76 +1,138 @@
 import * as api from "./apiService";
 import * as demo from "./demoService";
 
-const isDemo = () => {
-    const token = localStorage.getItem("token");
-    const demo = localStorage.getItem("demoMode");
 
-    return !token && demo === "true";
+const isDemo = () => {
+
+    const demoMode =
+        localStorage.getItem("demoMode");
+
+
+    const token =
+        localStorage.getItem("token");
+
+
+    return demoMode === "true" && !token;
+
 };
+
+
+
+
 
 export function getDashboard() {
 
-    return isDemo()
+    if(isDemo()) {
 
-        ? Promise.resolve(demo.getDashboard())
+        return Promise.resolve(
+            demo.getDashboard()
+        );
 
-        : api.getDashboard();
+    }
+
+
+    return api.getDashboard();
+
 }
+
+
+
+
 
 export function getUser() {
 
-    return isDemo()
 
-        ? Promise.resolve(demo.getUser())
+    if(isDemo()) {
 
-        : api.getUser();
-}
+        return Promise.resolve(
+            demo.getUser()
+        );
 
-export async function getTransactions() {
-    if (isDemo()) {
-        return demo.getTransactions();
     }
 
-    const data = await api.getTransactions();
 
-    return data.transactions;
+    return api.getUser();
+
 }
+
+
+
+
+
+export async function getTransactions() {
+
+
+    if(isDemo()) {
+
+        return demo.getTransactions();
+
+    }
+
+
+    const data =
+    await api.getTransactions();
+
+
+    return data.transactions || [];
+
+}
+
+
+
+
 
 export function addTransaction(transaction) {
 
-    return isDemo()
 
-        ? Promise.resolve(
+    if(isDemo()) {
 
-              demo.addTransaction(transaction)
+        return Promise.resolve(
+            demo.addTransaction(transaction)
+        );
 
-          )
+    }
 
-        : api.addTransaction(transaction);
+
+    return api.addTransaction(transaction);
+
 }
 
-export function updateTransaction(id, data) {
 
-    return isDemo()
 
-        ? Promise.resolve(
 
-              demo.updateTransaction(id, data)
 
-          )
+export function updateTransaction(id,data) {
 
-        : api.updateTransaction(id, data);
+
+    if(isDemo()) {
+
+        return Promise.resolve(
+            demo.updateTransaction(id,data)
+        );
+
+    }
+
+
+    return api.updateTransaction(id,data);
+
 }
+
+
+
+
 
 export function deleteTransaction(id) {
 
-    return isDemo()
 
-        ? Promise.resolve(
+    if(isDemo()) {
 
-              demo.deleteTransaction(id)
+        return Promise.resolve(
+            demo.deleteTransaction(id)
+        );
 
-          )
+    }
 
-        : api.deleteTransaction(id);
+
+    return api.deleteTransaction(id);
+
 }
