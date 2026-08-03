@@ -1,8 +1,9 @@
 import { demoUser, demoTransactions } from "./demoData";
 
-function initializeDemo() {
+function init() {
 
     if (!localStorage.getItem("demoUser")) {
+
         localStorage.setItem(
             "demoUser",
             JSON.stringify(demoUser)
@@ -10,6 +11,7 @@ function initializeDemo() {
     }
 
     if (!localStorage.getItem("demoTransactions")) {
+
         localStorage.setItem(
             "demoTransactions",
             JSON.stringify(demoTransactions)
@@ -17,89 +19,147 @@ function initializeDemo() {
     }
 }
 
-initializeDemo();
+init();
 
 export function getUser() {
+
     return JSON.parse(localStorage.getItem("demoUser"));
 }
 
 export function getTransactions() {
-    return JSON.parse(localStorage.getItem("demoTransactions")) || [];
+
+    return JSON.parse(
+        localStorage.getItem("demoTransactions")
+    ) || [];
 }
 
-export function saveTransactions(data) {
+function saveTransactions(data) {
+
     localStorage.setItem(
         "demoTransactions",
         JSON.stringify(data)
     );
 }
+
 export function addTransaction(transaction) {
 
     const transactions = getTransactions();
 
     const newTransaction = {
-        _id: Date.now().toString(),
+
         ...transaction,
-        createdAt: new Date().toISOString()
+
+        _id: crypto.randomUUID(),
+
+        createdAt: new Date().toISOString(),
+
     };
 
     transactions.unshift(newTransaction);
 
     saveTransactions(transactions);
 
-    return newTransaction;
+    return {
+
+        success: true,
+
+        transaction: newTransaction,
+
+    };
 }
 
-export function updateTransaction(id, updatedData) {
+export function updateTransaction(id, data) {
 
-    const transactions = getTransactions();
+    const updated = getTransactions().map((transaction) =>
 
-    const updated = transactions.map(transaction =>
         transaction._id === id
-            ? { ...transaction, ...updatedData }
+
+            ? { ...transaction, ...data }
+
             : transaction
     );
 
     saveTransactions(updated);
+
+    return {
+
+        success: true,
+
+    };
 }
 
 export function deleteTransaction(id) {
 
-    const transactions = getTransactions();
+    const filtered = getTransactions().filter(
 
-    const filtered = transactions.filter(
         transaction => transaction._id !== id
+
     );
 
     saveTransactions(filtered);
+
+    return {
+
+        success: true,
+
+    };
 }
 
 export function getDashboard() {
 
     const transactions = getTransactions();
 
-    const totalIncome = transactions
-        .filter(t => t.type === "income")
-        .reduce((sum, t) => sum + Number(t.amount), 0);
+    const income = transactions
 
-    const totalExpense = transactions
-        .filter(t => t.type === "expense")
-        .reduce((sum, t) => sum + Number(t.amount), 0);
+        .filter(transaction =>
+
+            transaction.type.toLowerCase() === "income"
+
+        )
+
+        .reduce(
+
+            (sum, transaction) =>
+
+                sum + Number(transaction.amount),
+
+            0
+
+        );
+
+    const expense = transactions
+
+        .filter(transaction =>
+
+            transaction.type.toLowerCase() === "expense"
+
+        )
+
+        .reduce(
+
+            (sum, transaction) =>
+
+                sum + Number(transaction.amount),
+
+            0
+
+        );
 
     return {
 
-        balance: totalIncome - totalExpense,
+        balance: income - expense,
 
-        totalIncome,
+        totalIncome: income,
 
-        totalExpense,
+        totalExpense: expense,
 
         totalTransactions: transactions.length,
 
         recentTransactions: [...transactions]
+
             .reverse()
-            .slice(0, 5)
+
+            .slice(0,5),
 
     };
-
 }

@@ -1,98 +1,337 @@
 import { useEffect, useState } from "react";
+
 import ExpenseCategoryChart from "../components/ExpenseCategoryChart.jsx";
 import MonthlyExpenseChart from "../components/MonthlyExpenseChart.jsx";
+
 import "../style/analytics.css";
 
 
+
 export default function Analytics() {
+
 
     const [categoryData, setCategoryData] = useState([]);
 
     const [monthlyData, setMonthlyData] = useState([]);
 
+    const [transactions, setTransactions] = useState([]);
+
+
+
+
+
     useEffect(() => {
+
 
         fetchCategory();
 
         fetchMonthly();
 
+        fetchTransactions();
+
+
     }, []);
+
+
+
+
+
+
 
     async function fetchCategory() {
 
-        const response = await fetch(
 
-            `${import.meta.env.VITE_API_URL}/api/analytics/category`,
+        try {
 
-            {
 
-                headers: {
+            const response = await fetch(
 
-                    Authorization:
+
+                `${import.meta.env.VITE_API_URL}/api/analytics/category`,
+
+
+                {
+
+                    headers: {
+
+                        Authorization:
+
                         `Bearer ${localStorage.getItem("token")}`
+
+                    }
 
                 }
 
-            }
 
-        );
+            );
 
-        const data = await response.json();
 
-        const formatted = Object.entries(data.categoryData).map(
 
-            ([name, value]) => ({
+            const data = await response.json();
+
+
+
+
+
+            const formatted = Object.entries(
+
+                data.categoryData || {}
+
+            ).map(([name, value]) => ({
+
 
                 name,
 
-                value,
+                value
 
-            })
 
-        );
+            }));
 
-        setCategoryData(formatted);
+
+
+
+
+            setCategoryData(formatted);
+
+
+
+        } catch(error) {
+
+
+            console.error(
+
+                "Category Analytics Error:",
+
+                error
+
+            );
+
+
+        }
+
 
     }
+
+
+
+
+
+
+
+
 
     async function fetchMonthly() {
 
-        const response = await fetch(
 
-            `${import.meta.env.VITE_API_URL}/api/analytics/monthly-expense`,
+        try {
 
-            {
 
-                headers: {
+            const response = await fetch(
 
-                    Authorization:
+
+                `${import.meta.env.VITE_API_URL}/api/analytics/monthly-expense`,
+
+
+                {
+
+                    headers: {
+
+
+                        Authorization:
+
                         `Bearer ${localStorage.getItem("token")}`
+
+
+                    }
+
 
                 }
 
-            }
 
-        );
+            );
 
-        const data = await response.json();
 
-        setMonthlyData(data.monthlyExpense);
+
+
+
+            const data = await response.json();
+
+
+
+
+
+            setMonthlyData(
+
+                data.monthlyExpense || []
+
+            );
+
+
+
+        } catch(error) {
+
+
+            console.error(
+
+                "Monthly Analytics Error:",
+
+                error
+
+            );
+
+
+        }
+
 
     }
 
+
+
+
+
+
+
+
+
+    async function fetchTransactions() {
+
+
+        try {
+
+
+            const response = await fetch(
+
+
+                `${import.meta.env.VITE_API_URL}/api/transactions`,
+
+
+                {
+
+                    headers: {
+
+
+                        Authorization:
+
+                        `Bearer ${localStorage.getItem("token")}`
+
+
+                    }
+
+
+                }
+
+
+            );
+
+
+
+
+
+            const data = await response.json();
+
+
+
+
+
+            setTransactions(
+
+                data.transactions || data || []
+
+            );
+
+
+
+        } catch(error) {
+
+
+            console.error(
+
+                "Transaction Error:",
+
+                error
+
+            );
+
+
+        }
+
+
+    }
+
+
+
+
+
+
+
+
+
     return (
 
-        <>
 
-            <ExpenseCategoryChart
-                data={categoryData}
-            />
 
-            <MonthlyExpenseChart
-                data={monthlyData}
-            />
+        <div className="analytics-container">
 
-        </>
+
+
+
+
+            <div className="analytics-grid">
+
+
+
+
+
+                <div className="analytics-card-wrapper">
+
+
+                    <ExpenseCategoryChart
+
+
+                        data={categoryData}
+
+
+                        transactions={transactions}
+
+
+                    />
+
+
+                </div>
+
+
+
+
+
+
+
+                <div className="analytics-card-wrapper">
+
+
+                    <MonthlyExpenseChart
+
+
+                        data={monthlyData}
+
+
+                    />
+
+
+                </div>
+
+
+
+
+
+
+            </div>
+
+
+
+
+
+        </div>
+
 
     );
 

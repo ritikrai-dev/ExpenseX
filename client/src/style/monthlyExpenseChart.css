@@ -1,0 +1,74 @@
+.monthly-chart-card{
+
+    background:#ffffff;
+
+    border-radius:20px;
+
+    padding:24px;
+
+    border:1px solid #eef2f7;
+
+    box-shadow:
+    0 8px 30px rgba(15,23,42,0.08);
+
+    transition:.3s ease;
+
+}
+
+
+
+.monthly-chart-card:hover{
+
+    box-shadow:
+    0 15px 40px rgba(15,23,42,0.12);
+
+}
+
+
+
+.monthly-chart-title{
+
+    font-size:22px;
+
+    font-weight:700;
+
+    color:#111827;
+
+    margin-bottom:20px;
+
+}
+
+
+
+.monthly-empty-text{
+
+    color:#6b7280;
+
+    font-size:14px;
+
+    margin-top:10px;
+
+}
+
+
+
+
+
+@media(max-width:768px){
+
+    .monthly-chart-card{
+
+        padding:18px;
+
+        border-radius:16px;
+
+    }
+
+
+    .monthly-chart-title{
+
+        font-size:20px;
+
+    }
+
+}

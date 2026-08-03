@@ -2,170 +2,556 @@ import ReportSummary from "../components/ReportSummary.jsx";
 import "../style/report.css";
 import { useEffect, useState } from "react";
 
+
 export default function Reports() {
+
+
     const [summary, setSummary] = useState({
-    totalIncome:0,
-    totalExpense:0,
-    balance:0,
-    totalTransactions:0
-});
-async function fetchSummary(){
 
-    try{
+        totalIncome: 0,
 
-        const response = await fetch(
+        totalExpense: 0,
 
-            `${import.meta.env.VITE_API_URL}/api/dashboard`,
+        balance: 0,
 
-            {
+        totalTransactions: 0
 
-                headers:{
+    });
 
-                    Authorization:`Bearer ${localStorage.getItem("token")}`
 
-                }
 
-            }
+    const [fromDate, setFromDate] = useState("");
 
-        );
+    const [toDate, setToDate] = useState("");
 
-        const data = await response.json();
 
-        setSummary({
 
-            totalIncome:data.dashboard.totalIncome,
 
-            totalExpense:data.dashboard.totalExpense,
 
-            balance:data.dashboard.balance,
+    async function fetchSummary() {
 
-            totalTransactions:data.dashboard.totalTransactions
 
-        });
+        try {
 
-    }
 
-    catch(error){
+            const response = await fetch(
 
-        console.log(error);
+                `${import.meta.env.VITE_API_URL}/api/dashboard`,
 
-    }
+                {
 
-}
+                    headers: {
 
-useEffect(() => {
-    fetchSummary();
-}, []);
-    const downloadReport = async (type) => {
+                        Authorization:
 
-    try {
+                        `Bearer ${localStorage.getItem("token")}`
 
-        const response = await fetch(
-
-            `${import.meta.env.VITE_API_URL}/api/reports/${type}`,
-
-            {
-
-                headers: {
-
-                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                    }
 
                 }
 
-            }
+            );
 
-        );
 
-        if (!response.ok) {
 
-            throw new Error("Download failed");
+            const data = await response.json();
+
+
+
+            setSummary({
+
+                totalIncome: data.dashboard.totalIncome,
+
+                totalExpense: data.dashboard.totalExpense,
+
+                balance: data.dashboard.balance,
+
+                totalTransactions: data.dashboard.totalTransactions
+
+            });
+
+
+
+        } catch(error) {
+
+
+            console.log(error);
+
 
         }
 
-        const blob = await response.blob();
-
-        const url = window.URL.createObjectURL(blob);
-
-        const link = document.createElement("a");
-
-        link.href = url;
-
-        link.download = `expense-report.${type === "excel" ? "xlsx" : type}`;
-
-        document.body.appendChild(link);
-
-        link.click();
-
-        link.remove();
-
-        window.URL.revokeObjectURL(url);
 
     }
 
-    catch (error) {
 
-        console.log(error);
 
-    }
 
-};
+
+
+    useEffect(() => {
+
+
+        fetchSummary();
+
+
+    }, []);
+
+
+
+
+
+
+
+
+
+    const downloadReport = async(type, filterDate=false) => {
+
+
+        try {
+
+
+            let url =
+
+            `${import.meta.env.VITE_API_URL}/api/reports/${type}`;
+
+
+
+
+
+            if(filterDate && fromDate && toDate) {
+
+
+                url +=
+
+                `?fromDate=${fromDate}&toDate=${toDate}`;
+
+
+            }
+
+
+
+
+
+            const response = await fetch(
+
+                url,
+
+                {
+
+                    headers: {
+
+                        Authorization:
+
+                        `Bearer ${localStorage.getItem("token")}`
+
+                    }
+
+                }
+
+            );
+
+
+
+
+
+            if(!response.ok) {
+
+
+                throw new Error(
+                    "Download failed"
+                );
+
+
+            }
+
+
+
+
+
+            const blob = await response.blob();
+
+
+
+
+            const fileUrl =
+
+            window.URL.createObjectURL(blob);
+
+
+
+
+
+            const link = document.createElement("a");
+
+
+
+            link.href = fileUrl;
+
+
+
+            link.download =
+
+            `expense-report.${
+                
+                type === "excel"
+
+                ? 
+
+                "xlsx"
+
+                :
+
+                "pdf"
+
+            }`;
+
+
+
+
+
+            document.body.appendChild(link);
+
+
+
+            link.click();
+
+
+
+            link.remove();
+
+
+
+            window.URL.revokeObjectURL(fileUrl);
+
+
+
+        } catch(error) {
+
+
+            console.log(error);
+
+
+        }
+
+
+    };
+
+
+
+
+
+
+
 
     return (
 
         <>
 
+
             <h1 className="page-title">
+
                 Reports
+
             </h1>
-            <ReportSummary summary={summary} />
-
-            <br>
-            </br>
-
-<div className="export-section">
 
 
-            <h2 className="export-title">
-    Export Financial Reports
-</h2>
 
-<p className="export-subtitle">
-    Download your expense history in multiple formats.
-</p>
 
-            <div className="report-actions">
 
-    <button
-        className="primary-btn"
-        onClick={() => downloadReport("pdf")}
-    >
-        📄 Export PDF
-    </button>
+            <ReportSummary
 
-    <button
-        className="primary-btn"
-        onClick={() => downloadReport("excel")}
-    >
-        📊 Export Excel
-    </button>
+                summary={summary}
 
-    <button
-        className="primary-btn"
-        onClick={() => downloadReport("csv")}
-    >
-        📑 Export CSV
-    </button>
+            />
 
-    <button
-        className="primary-btn"
-        onClick={() => downloadReport("json")}
-    >
-        🗂 Export JSON
-    </button>
 
-</div>
 
-</div>
+
+
+
+
+
+
+            {/* Complete Report Export */}
+
+
+
+            <div className="export-section">
+
+
+                <h2 className="export-title">
+
+                    Export Financial Reports
+
+                </h2>
+
+
+
+                <p className="export-subtitle">
+
+                    Download your complete expense history.
+
+                </p>
+
+
+
+
+
+
+                <div className="report-actions">
+
+
+                    <button
+
+                        className="primary-btn"
+
+                        onClick={() =>
+
+                            downloadReport("pdf")
+
+                        }
+
+                    >
+
+                        📄 Export PDF
+
+
+                    </button>
+
+
+
+
+
+
+
+                    <button
+
+                        className="primary-btn"
+
+                        onClick={() =>
+
+                            downloadReport("excel")
+
+                        }
+
+                    >
+
+                        📊 Export Excel
+
+
+                    </button>
+
+
+
+
+                </div>
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+            {/* Date Based Report */}
+
+
+
+
+
+            <div className="export-section date-report-section">
+
+
+
+                <h2 className="export-title">
+
+                    Download Report By Date
+
+                </h2>
+
+
+
+
+
+                <p className="export-subtitle">
+
+                    Select date range and download filtered transactions.
+
+                </p>
+
+
+
+
+
+
+
+
+
+                <div className="date-filter">
+
+
+
+
+
+                    <div>
+
+
+                        <label>
+
+                            From Date
+
+                        </label>
+
+
+
+                        <input
+
+                            type="date"
+
+                            value={fromDate}
+
+                            onChange={(e)=>
+
+                                setFromDate(
+                                    e.target.value
+                                )
+
+                            }
+
+                        />
+
+
+                    </div>
+
+
+
+
+
+
+
+
+                    <div>
+
+
+                        <label>
+
+                            To Date
+
+                        </label>
+
+
+
+
+                        <input
+
+                            type="date"
+
+                            value={toDate}
+
+                            onChange={(e)=>
+
+                                setToDate(
+                                    e.target.value
+                                )
+
+                            }
+
+                        />
+
+
+                    </div>
+
+
+
+
+
+                </div>
+
+
+
+
+
+
+
+
+
+                <div className="report-actions">
+
+
+
+
+
+                    <button
+
+                        className="primary-btn"
+
+                        onClick={() =>
+
+                            downloadReport(
+                                "pdf",
+                                true
+                            )
+
+                        }
+
+                    >
+
+                        📄 Download PDF
+
+
+                    </button>
+
+
+
+
+
+
+
+
+                    <button
+
+                        className="primary-btn"
+
+                        onClick={() =>
+
+                            downloadReport(
+                                "excel",
+                                true
+                            )
+
+                        }
+
+                    >
+
+                        📊 Download Excel
+
+
+                    </button>
+
+
+
+
+
+
+
+                </div>
+
+
+
+
+
+            </div>
+
+
+
+
+
+
         </>
 
     );

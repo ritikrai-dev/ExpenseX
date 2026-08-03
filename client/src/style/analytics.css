@@ -1,47 +1,193 @@
-.analytics-page{
-    display:flex;
-    flex-direction:column;
-    gap:30px;
-}
+/* ========================= */
+/* Main Container */
+/* ========================= */
 
-.chart-card{
-    background:#fff;
+.analytics-container {
+
+    width:100%;
+
     padding:24px;
-    border-radius:18px;
-    box-shadow:0 8px 25px rgba(0,0,0,.06);
-}
 
-.chart-card h2{
-    margin-bottom:20px;
-    color:#111827;
-    font-size:22px;
-    font-weight:600;
-}
-
-@media (max-width:768px){
-
-.chart-card{
-    padding:18px;
-}
-
-.chart-card h2{
-    font-size:20px;
-}
+    box-sizing:border-box;
 
 }
 
-@media (max-width:576px){
 
-.analytics-page{
-    gap:20px;
+
+/* ========================= */
+/* Grid Layout */
+/* ========================= */
+
+
+.analytics-grid {
+
+    display:grid;
+
+    grid-template-columns:
+
+    repeat(2, minmax(0, 1fr));
+
+    gap:32px;
+
+    align-items:start;
+
 }
 
-.chart-card{
-    padding:15px;
+
+
+/* Card Wrapper */
+
+.analytics-card-wrapper {
+
+    width:100%;
+
+    min-width:0;
+
 }
 
-.chart-card h2{
-    font-size:18px;
+
+
+
+
+/* ========================= */
+/* Large Laptop */
+/* 1200px - 1440px */
+/* ========================= */
+
+
+@media(max-width:1440px){
+
+
+    .analytics-grid{
+
+        gap:28px;
+
+    }
+
+
 }
+
+
+
+
+
+/* ========================= */
+/* Tablet Landscape */
+/* 992px - 1200px */
+/* ========================= */
+
+
+@media(max-width:1200px){
+
+
+    .analytics-grid{
+
+        grid-template-columns:1fr;
+
+        gap:28px;
+
+    }
+
+
+
+}
+
+
+
+
+
+
+/* ========================= */
+/* Tablet */
+/* 768px - 992px */
+/* ========================= */
+
+
+@media(max-width:992px){
+
+
+    .analytics-container{
+
+        padding:20px;
+
+    }
+
+
+
+    .analytics-grid{
+
+        gap:24px;
+
+    }
+
+
+}
+
+
+
+
+
+
+/* ========================= */
+/* Mobile */
+/* Below 768px */
+/* ========================= */
+
+
+@media(max-width:768px){
+
+
+    .analytics-container{
+
+        padding:16px;
+
+    }
+
+
+
+    .analytics-grid{
+
+        grid-template-columns:1fr;
+
+        gap:20px;
+
+    }
+
+
+}
+
+
+
+
+
+
+/* ========================= */
+/* Small Mobile */
+/* Below 480px */
+/* ========================= */
+
+
+@media(max-width:480px){
+
+
+    .analytics-container{
+
+
+        padding:12px;
+
+
+    }
+
+
+
+    .analytics-grid{
+
+
+        gap:16px;
+
+
+    }
+
+
 
 }

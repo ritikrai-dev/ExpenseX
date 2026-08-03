@@ -1,49 +1,52 @@
 import { useEffect, useState } from "react";
 import DashboardHeader from "../components/DashboardHeader";
 import SummaryCards from "../components/SummaryCards";
-import RecentTransactions from "../components/RecentTransactions";
+import BarGraph from "../components/landing/BarGraph.jsx";
 
-import { getDashboard } from "../components/data/demoService";
+import { getDashboard } from "../components/data/dataService";
 
 export default function Dashboard() {
+  const [dashboardData, setDashboardData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-    const [dashboardData, setDashboardData] = useState(null);
+  useEffect(() => {
+    async function loadDashboard() {
+      try {
+        setLoading(true);
 
-    useEffect(() => {
+        const dashboard = await getDashboard();
 
-        async function loadDashboard() {
-
-            try {
-
-                const data = await getDashboard();
-
-                setDashboardData(data);
-
-            } catch (error) {
-
-                console.log(error);
-
-            }
-
-        }
-
-        loadDashboard();
-
-    }, []);
-
-    if (!dashboardData) {
-        return <h2>Loading...</h2>;
+        setDashboardData(dashboard);
+      } catch (error) {
+        console.error("Dashboard Error:", error);
+      } finally {
+        setLoading(false);
+      }
     }
 
-    return (
-        <>
-            <DashboardHeader />
+    loadDashboard();
+  }, []);
 
-            <SummaryCards dashboard={dashboardData} />
+  if (loading) {
+    return <h2>Loading...</h2>;
+  }
 
-            <RecentTransactions
-                transactions={dashboardData.recentTransactions}
-            />
-        </>
-    );
+  if (!dashboardData) {
+    return <h2>Failed to load dashboard.</h2>;
+  }
+
+  return (
+    <>
+      <DashboardHeader />
+
+      <SummaryCards dashboard={dashboardData} />
+
+      <BarGraph
+ transactions={
+   dashboardData.recentTransactions ||
+   []
+ }
+/>
+    </>
+  );
 }

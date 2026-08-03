@@ -1,59 +1,76 @@
-import * as demo from "./demoService";
 import * as api from "./apiService";
+import * as demo from "./demoService";
 
-const isDemo =
-    () => localStorage.getItem("demoMode") === "true";
+const isDemo = () => {
+    const token = localStorage.getItem("token");
+    const demo = localStorage.getItem("demoMode");
 
-export async function getDashboard() {
+    return !token && demo === "true";
+};
 
-    if (isDemo()) {
-        return demo.getDashboard();
-    }
+export function getDashboard() {
 
-    return api.getDashboard();
+    return isDemo()
+
+        ? Promise.resolve(demo.getDashboard())
+
+        : api.getDashboard();
 }
 
-export async function getUser() {
+export function getUser() {
 
-    if (isDemo()) {
-        return demo.getUser();
-    }
+    return isDemo()
 
-    return api.getUser();
-}
+        ? Promise.resolve(demo.getUser())
 
-export async function addTransaction(transaction) {
-
-    if (isDemo()) {
-        return demo.addTransaction(transaction);
-    }
-
-    return api.addTransaction(transaction);
-}
-
-export async function updateTransaction(id, data) {
-
-    if (isDemo()) {
-        return demo.updateTransaction(id, data);
-    }
-
-    return api.updateTransaction(id, data);
-}
-
-export async function deleteTransaction(id) {
-
-    if (isDemo()) {
-        return demo.deleteTransaction(id);
-    }
-
-    return api.deleteTransaction(id);
+        : api.getUser();
 }
 
 export async function getTransactions() {
-
     if (isDemo()) {
         return demo.getTransactions();
     }
 
-    return api.getTransactions();
+    const data = await api.getTransactions();
+
+    return data.transactions;
+}
+
+export function addTransaction(transaction) {
+
+    return isDemo()
+
+        ? Promise.resolve(
+
+              demo.addTransaction(transaction)
+
+          )
+
+        : api.addTransaction(transaction);
+}
+
+export function updateTransaction(id, data) {
+
+    return isDemo()
+
+        ? Promise.resolve(
+
+              demo.updateTransaction(id, data)
+
+          )
+
+        : api.updateTransaction(id, data);
+}
+
+export function deleteTransaction(id) {
+
+    return isDemo()
+
+        ? Promise.resolve(
+
+              demo.deleteTransaction(id)
+
+          )
+
+        : api.deleteTransaction(id);
 }
