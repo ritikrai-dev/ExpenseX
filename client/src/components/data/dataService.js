@@ -1,138 +1,94 @@
 import * as api from "./apiService";
 import * as demo from "./demoService";
 
-
-const isDemo = () => {
-
-    const demoMode =
-        localStorage.getItem("demoMode");
-
-
-    const token =
-        localStorage.getItem("token");
-
-
-    return demoMode === "true" && !token;
-
+export const isDemo = () => {
+  const demoMode = localStorage.getItem("demoMode");
+  const token = localStorage.getItem("token");
+  return demoMode === "true" || !token;
 };
 
-
-
-
-
-export function getDashboard() {
-
-    if(isDemo()) {
-
-        return Promise.resolve(
-            demo.getDashboard()
-        );
-
-    }
-
-
-    return api.getDashboard();
-
+export async function getDashboard() {
+  if (isDemo()) {
+    return demo.getDashboard();
+  }
+  return api.getDashboard();
 }
 
-
-
-
-
-export function getUser() {
-
-
-    if(isDemo()) {
-
-        return Promise.resolve(
-            demo.getUser()
-        );
-
-    }
-
-
-    return api.getUser();
-
+export async function getUser() {
+  if (isDemo()) {
+    return demo.getUser();
+  }
+  return api.getUser();
 }
 
-
-
-
-
-export async function getTransactions() {
-
-
-    if(isDemo()) {
-
-        return demo.getTransactions();
-
-    }
-
-
-    const data =
-    await api.getTransactions();
-
-
-    return data.transactions || [];
-
+export async function updateUser(profile) {
+  if (isDemo()) {
+    return demo.updateUser(profile);
+  }
+  return api.updateUser(profile);
 }
 
-
-
-
-
-export function addTransaction(transaction) {
-
-
-    if(isDemo()) {
-
-        return Promise.resolve(
-            demo.addTransaction(transaction)
-        );
-
-    }
-
-
-    return api.addTransaction(transaction);
-
+export async function changePassword(passwords) {
+  if (isDemo()) {
+    return demo.changePassword(passwords);
+  }
+  return api.changePassword(passwords);
 }
 
-
-
-
-
-export function updateTransaction(id,data) {
-
-
-    if(isDemo()) {
-
-        return Promise.resolve(
-            demo.updateTransaction(id,data)
-        );
-
-    }
-
-
-    return api.updateTransaction(id,data);
-
+export async function getTransactions(page = 1, limit = 10) {
+  if (isDemo()) {
+    const all = demo.getTransactions();
+    return all;
+  }
+  const data = await api.getTransactions(page, limit);
+  return data.transactions || data || [];
 }
 
+export async function addTransaction(transaction) {
+  if (isDemo()) {
+    return demo.addTransaction(transaction);
+  }
+  return api.addTransaction(transaction);
+}
 
+export async function updateTransaction(id, data) {
+  if (isDemo()) {
+    return demo.updateTransaction(id, data);
+  }
+  return api.updateTransaction(id, data);
+}
 
+export async function deleteTransaction(id) {
+  if (isDemo()) {
+    return demo.deleteTransaction(id);
+  }
+  return api.deleteTransaction(id);
+}
 
+export async function getCategoryAnalytics() {
+  if (isDemo()) {
+    return demo.getCategoryAnalytics();
+  }
+  return api.getCategoryAnalytics();
+}
 
-export function deleteTransaction(id) {
+export async function getMonthlyExpense() {
+  if (isDemo()) {
+    return demo.getMonthlyExpense();
+  }
+  return api.getMonthlyExpense();
+}
 
+export async function getAIInsights() {
+  if (isDemo()) {
+    return demo.getAIInsights();
+  }
+  return api.getAIInsights();
+}
 
-    if(isDemo()) {
-
-        return Promise.resolve(
-            demo.deleteTransaction(id)
-        );
-
-    }
-
-
-    return api.deleteTransaction(id);
-
+export async function downloadReport(type = "pdf", filterDate = false, fromDate = "", toDate = "") {
+  if (isDemo()) {
+    return demo.downloadReport(type, filterDate, fromDate, toDate);
+  }
+  return api.downloadReport(type, filterDate, fromDate, toDate);
 }
