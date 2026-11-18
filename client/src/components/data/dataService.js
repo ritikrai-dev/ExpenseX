@@ -1,11 +1,9 @@
 import * as api from "./apiService";
 import * as demo from "./demoService";
 
-export const isDemo = () => {
-  const demoMode = localStorage.getItem("demoMode");
-  const token = localStorage.getItem("token");
-  return demoMode === "true" || !token;
-};
+export const isDemo = demo.isDemo;
+export const enableDemoMode = demo.enableDemoMode;
+export const disableDemoMode = demo.disableDemoMode;
 
 export async function getDashboard() {
   if (isDemo()) {

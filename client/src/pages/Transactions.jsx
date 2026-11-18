@@ -28,27 +28,30 @@ export default function Transactions() {
   const [filter, setFilter] = useState("all");
 
   useEffect(() => {
-    loadTransactions();
-  }, []);
+    loadTransactions(page);
+  }, [page]);
 
-  async function loadTransactions() {
+  async function loadTransactions(currentPage = page) {
     try {
       setLoading(true);
 
-      const data = await getTransactions();
+      const data = await getTransactions(currentPage, 10);
 
       // Backend returns:
       // { transactions, totalPages }
 
       // Demo returns:
-      // [ ...]
+      // [ ...] or { transactions, totalPages }
 
       if (Array.isArray(data)) {
         setTransactions(data);
-        setTotalPages(1);
-      } else {
+        setTotalPages(Math.max(1, Math.ceil(data.length / 10)));
+      } else if (data?.transactions) {
         setTransactions(data.transactions || []);
         setTotalPages(data.totalPages || 1);
+      } else {
+        setTransactions([]);
+        setTotalPages(1);
       }
     } catch (err) {
       console.log(err);
@@ -81,7 +84,8 @@ export default function Transactions() {
 
   async function handleAddTransaction(formData) {
     try {
-      const transaction = await addTransaction(formData);
+      const res = await addTransaction(formData);
+      const transaction = res?.transaction || res;
 
       setTransactions((prev) => [
         transaction,
@@ -104,14 +108,15 @@ export default function Transactions() {
 
   async function handleUpdateTransaction(formData) {
     try {
-      const updated = await updateTransaction(
+      const res = await updateTransaction(
         selectedTransaction._id,
         formData
       );
+      const updated = res?.transaction || res || { ...formData, _id: selectedTransaction._id };
 
       setTransactions((prev) =>
         prev.map((t) =>
-          t._id === updated._id ? updated : t
+          t._id === (updated._id || selectedTransaction._id) ? updated : t
         )
       );
 

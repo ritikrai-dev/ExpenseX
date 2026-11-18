@@ -37,7 +37,7 @@ export default function TransactionForm({transaction,onSubmit}) {
 
             description: transaction.description,
 
-            date: transaction.date.split("T")[0],
+            date: transaction.date ? transaction.date.split("T")[0] : new Date().toISOString().split("T")[0],
 
         });
 

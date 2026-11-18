@@ -24,11 +24,8 @@ const COLORS = [
 
 
 export default function ExpenseCategoryChart({
-
-    data,
-
+    data = [],
     transactions = []
-
 }) {
 
 
@@ -322,9 +319,7 @@ export default function ExpenseCategoryChart({
 
 
                                 <h4 className="transaction-name">
-
-                                    {item.title}
-
+                                    {item.title || item.description || item.category || "Expense"}
                                 </h4>
 
 

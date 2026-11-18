@@ -81,7 +81,7 @@ export default function Preview() {
 
                 <img
 
-                    src="/dashboard-preview.png"
+                    src="/image.png"
 
                     alt="ExpenseX Dashboard"
 

@@ -457,11 +457,7 @@ export default function BarGraph({ transactions = [] }) {
 
 
                                 <h4 className="bar-title">
-
-
-                                    {item.title}
-
-
+                                    {item.title || item.description || item.category || "Transaction"}
                                 </h4>
 
 

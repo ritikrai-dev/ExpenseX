@@ -14,10 +14,22 @@ export function initDemoData(force = false) {
   }
 }
 
+export function isDemo() {
+  const demoMode = localStorage.getItem("demoMode");
+  const token = localStorage.getItem("token");
+  return demoMode === "true" || !token;
+}
+
 export function enableDemoMode() {
   initDemoData();
   localStorage.setItem("demoMode", "true");
   localStorage.removeItem("token");
+}
+
+export function disableDemoMode() {
+  localStorage.removeItem("demoMode");
+  localStorage.removeItem("demoUser");
+  localStorage.removeItem("demoTransactions");
 }
 
 export function getUser() {

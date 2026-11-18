@@ -15,6 +15,9 @@ export default function App() {
     <Routes>
       <Route path="/" element={<Landing/>}/>
       <Route path="/auth" element={<AuthPage/>} />
+      <Route path="/login" element={<AuthPage defaultMode="login" />} />
+      <Route path="/signup" element={<AuthPage defaultMode="signup" />} />
+      <Route path="/register" element={<AuthPage defaultMode="signup" />} />
      <Route
         element={
           <Auth>

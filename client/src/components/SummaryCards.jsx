@@ -6,25 +6,25 @@ export default function SummaryCards({ dashboard }) {
 
     {
         title: "Balance",
-        amount: `₹${dashboard.balance.toLocaleString()}`,
+        amount: `₹${(dashboard?.balance ?? 0).toLocaleString()}`,
         icon: "ti ti-wallet",
     },
 
     {
         title: "Income",
-        amount: `₹${dashboard.totalIncome.toLocaleString()}`,
+        amount: `₹${(dashboard?.totalIncome ?? 0).toLocaleString()}`,
         icon: "ti ti-arrow-up",
     },
 
     {
         title: "Expense",
-        amount: `₹${dashboard.totalExpense.toLocaleString()}`,
+        amount: `₹${(dashboard?.totalExpense ?? 0).toLocaleString()}`,
         icon: "ti ti-arrow-down",
     },
 
     {
         title: "Transactions",
-        amount: dashboard.totalTransactions,
+        amount: dashboard?.totalTransactions ?? 0,
         icon: "ti ti-receipt",
     },
 
